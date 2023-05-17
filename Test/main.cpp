@@ -6,11 +6,18 @@ using namespace std;
 
 int main()
 {
-    Date date(1, 3, 2022);
+    Date date(17, 5, 2023);
 
-    int day = date.GetDay();
+    int today = date.getDay();
+    int tomorrow = date.getDay() + 1;
+    int summ = tomorrow + today;
 
-    cout << day << endl;
+    cout << summ << endl;
+
+    int notSumm = tomorrow - today;
+
+    cout << notSumm << endl;
+
 
     return 0;
 }

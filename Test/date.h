@@ -1,51 +1,57 @@
 #ifndef DATE_H
 #define DATE_H
 
-class Date {
+class Date
+{
 private:
     const int DefaultDateDay = 1;
-    const int DEFAULT_DATE_MONTH = 1;
-    const int DEFAULT_DATE_YEAR = 1970;
-    const int DAYS_IN_YEAR_WITHOUT_FEB = 337;
+    const int DefaultDateMonth = 1;
+    const int DefaultDateYear = 1970;
+    const int DaysInYearWithoutFeb = 337;
 
     int d = DefaultDateDay;
-    int m = DEFAULT_DATE_MONTH;
-    int y = DEFAULT_DATE_YEAR;
+    int m = DefaultDateMonth;
+    int y = DefaultDateYear;
 
     // Дальше реализуем вспомогательные функции-члены.
     // Нам нужно будет понимать високосный ли перед нами год, корректную ли дату ввели:
     int getDaysInFeb(int year) const;
 
-    int GetDaysInMonth(int month, int year) const;
+    int getDaysInMonth(int month, int year) const;
 
-    inline int GetDaysInYear(int year) const {
-        return DAYS_IN_YEAR_WITHOUT_FEB + getDaysInFeb(year);
+    inline int getDaysInYear(int year) const
+    {
+        return DaysInYearWithoutFeb + getDaysInFeb(year);
     }
 
-    inline bool IsCorrectDate() const {
-        return GetMonth() <= 12 && GetMonth() >= 1 && GetDay() <= GetDaysInMonth(GetMonth(), GetYear()) && GetDay() > 0;
+    inline bool isCorrectDate() const
+    {
+        return getMonth() <= 12 && getMonth() >= 1 && getDay() <= getDaysInMonth(getMonth(), getYear()) && getDay() > 0;
     }
 
     // Помимо прочего будет полезно уметь переводить текущую дату в число — количество дней от 01.01.1970 и обратно.
-    int DaysPassedToMonth(int month, int year) const;
+    int daysPassedToMonth(int month, int year) const;
 
-    int GetDays() const;
+    int getDays() const;
 
-    void SetFromDays(int inp_days);
+    void setFromDays(int inp_days);
 
     // Когда подготовительная часть закончена, реализуем публичный интерфейс:
 public:
     Date(int day, int month, int year);
 
-    inline int GetDay() const {
+    inline int getDay() const
+    {
         return d;
     }
 
-    inline int GetMonth() const {
+    inline int getMonth() const
+    {
         return m;
     }
 
-    inline int GetYear() const {
+    inline int getYear() const
+    {
         return y;
     }
 

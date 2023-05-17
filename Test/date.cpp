@@ -3,84 +3,91 @@
 #include "date.h"
 
 Date::Date(int day, int month, int year)
-    : d{day}, m{month}, y{year} {
-    if (!IsCorrectDate()) {
+    : d{day}, m{month}, y{year}
+{
+    if (!isCorrectDate())
+    {
         d = DefaultDateDay;
-        m = DEFAULT_DATE_MONTH;
-        y = DEFAULT_DATE_YEAR;
+        m = DefaultDateMonth;
+        y = DefaultDateYear;
     }
 }
 
-Date Date::operator +(int k) const {
+Date Date::operator +(int k) const
+{
     Date result(*this);
-    result.SetFromDays(result.GetDays() + k);
+    result.setFromDays(result.getDays() + k);
     return result;
 }
 
-int Date::operator -(const Date &other) const {
-    return GetDays() - other.GetDays();
+int Date::operator -(const Date &other) const
+{
+    return getDays() - other.getDays();
 }
 
-Date Date::operator -(int k) const {
+Date Date::operator -(int k) const
+{
     Date result(*this);
-    result.SetFromDays(result.GetDays() - k);
+    result.setFromDays(result.getDays() - k);
     return result;
 }
 
-int Date::getDaysInFeb(int year) const {
-    if ((!(year % 4) && (year % 100)) || !(year % 400)) {
+int Date::getDaysInFeb(int year) const
+{
+    if ((!(year % 4) && (year % 100)) || !(year % 400))
+    {
         return 29;
     }
     return 28;
 }
 
-int Date::GetDaysInMonth(int month, int year) const {
-    switch (month) {
+int Date::getDaysInMonth(int month, int year) const
+{
+    switch (month)
+    {
+    case 1:
+        return 31;
     case 2:
         return getDaysInFeb(year);
-    case 1:
-    case 3:
-    case 5:
-    case 7:
-    case 8:
-    case 10:
-    case 12:
-        return 31;
     default:
         return 30;
     }
 }
 
-int Date::DaysPassedToMonth(int month, int year) const {
+int Date::daysPassedToMonth(int month, int year) const
+{
     int days = 0;
     for (int i = 1; i < month; ++i) {
-        days += GetDaysInMonth(i, year);
+        days += getDaysInMonth(i, year);
     }
     return days;
 }
 
-int Date::GetDays() const {
+int Date::getDays() const
+{
     int days = 0;
-    for (int i = DEFAULT_DATE_YEAR; i < GetYear(); ++i) {
-        days += GetDaysInYear(i);
+    for (int i = DefaultDateYear; i < getYear(); ++i) {
+        days += getDaysInYear(i);
     }
-    return days + DaysPassedToMonth(GetMonth(), GetYear()) + GetDay();
+    return days + daysPassedToMonth(getMonth(), getYear()) + getDay();
 }
 
-void Date::SetFromDays(int inp_days) {
-    m = DEFAULT_DATE_MONTH;
-    y = DEFAULT_DATE_YEAR;
+void Date::setFromDays(int inp_days) {
+    m = DefaultDateMonth;
+    y = DefaultDateYear;
 
-    while (inp_days > GetDaysInYear(GetYear())) {  // сначала определяем год
-        inp_days -= GetDaysInYear(GetYear());
+    while (inp_days > getDaysInYear(getYear()))
+    {  // сначала определяем год
+        inp_days -= getDaysInYear(getYear());
         ++y;
     }
 
-    while (inp_days > DaysPassedToMonth(GetMonth() + 1, GetYear())) {  // определяем месяц
+    while (inp_days > daysPassedToMonth(getMonth() + 1, getYear()))
+    {  // определяем месяц
         ++m;
     }
 
-    d = inp_days - DaysPassedToMonth(GetMonth(), GetYear());  // остаток в дни
+    d = inp_days - daysPassedToMonth(getMonth(), getYear());  // остаток в дни
 }
 
 
